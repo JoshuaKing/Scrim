@@ -1,4 +1,4 @@
 Scrim
 =====
 
-Manages eSport Scrim teams to organise scrims and teams
+A service for eSports teams to organise scrims
