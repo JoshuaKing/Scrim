@@ -6,11 +6,11 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var redis = require('redis');
 var db = redis.createClient(10441, "angelfish.redistogo.com");
-//db.auth("##token##", function() {console.log("DB Connected");});
+db.auth("5c4121f133421b3593b2bf68af64be7b", function() {console.log("DB Connected");});
 
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var team = require('./routes/team');
 
 var app = express();
 
@@ -30,7 +30,7 @@ app.use(function(req, res, next){
 });
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/team', team);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
