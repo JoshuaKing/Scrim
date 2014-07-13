@@ -1,0 +1,9 @@
+extends layout
+
+block content
+	h1 Welcome to Scrim
+	p Add a new user:
+	form#formAddUser(name="adduser", method="post", action="/adduser")
+		input#inputUserName(type="text", placeholder="Username", name="username")
+		input#inputUserPass(type="text", placeholder="Password", name="userpass")
+		button#btnSubmit(type="submit") Submit

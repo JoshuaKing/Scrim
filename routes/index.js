@@ -22,15 +22,49 @@ router.get('/home', function(req, res) {
 
 /* GET signup page */
 router.get('/signup', function(req, res) {
+	res.render('signup', {});
+});
+
+router.post('/adduser', function(req, res) {
+	// Local DB variable
 	var db = req.db;
-	db.get("foo", function(err, value) {
-		if (err) throw(err);
-		console.log(value);
-		res.render('home', {
-			"title" : "Signup!",
-			"foo" : value
-		});
+
+	// Get form values
+	var userName = req.body.username;
+	var userPass = req.body.userpass;
+
+
+	// Check that the username doesn't already exist?
+	db.hexists("users", userName, function(err, reply) {
+		if (reply) {
+			// Already exists, throw error
+			console.log("User already exists");
+
+		} else {
+			console.log("Username is available");
+
+			// Add user
+			db.get("NEXT_USER_ID", function(err, reply) {
+				db.incr("NEXT_USER_ID");
+				var newUserId = reply;
+				console.log("new user ID number is "+newUserId);
+				db.hset("users", userName, newUserId);
+				
+				var currentTime = new Date().getTime();
+				db.hmset("user:"+newUserId, {
+					"username" : userName,
+					"password" : userPass,
+					"date_created" :  currentTime
+				});
+
+			});
+		}
+		
 	});
+	
+
+	res.redirect('/signup');
+	
 });
 
 /* GET new team page */
@@ -52,5 +86,19 @@ router.get('/logout', function(req, res) {
 
 	res.redirect("/");
 });
+
+/* PAGE FOR DEBUGGING THE DATABASE */
+router.get('/debug', function(req, res) {
+	var db = req.db;
+	db.get("foo", function(err, value) {
+		if (err) throw(err);
+		console.log(value);
+		res.render('home', {
+			"title" : "Debugging",
+			"foo" : value
+		});
+	});
+});
+
 
 module.exports = router;
