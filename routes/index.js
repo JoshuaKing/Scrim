@@ -87,16 +87,38 @@ router.get('/logout', function(req, res) {
 	res.redirect("/");
 });
 
+
+
+
+
 /* PAGE FOR DEBUGGING THE DATABASE */
 router.get('/debug', function(req, res) {
+	// Local DB
 	var db = req.db;
-	db.get("foo", function(err, value) {
+
+	db.hgetall("users", function(err, reply) {
 		if (err) throw(err);
-		console.log(value);
-		res.render('home', {
-			"title" : "Debugging",
-			"foo" : value
-		});
+
+
+		
+		var numberOfUsers = Object.keys(reply).length;
+		//console.log("Logging all user data : " + numberOfUsers);
+
+		var allData = [];
+		var i, returnCount = 0;
+		for(i = 1; i <= numberOfUsers; i++) {
+			db.hgetall("user:"+i, function(err, reply) {
+				//console.log(reply)
+				allData.push(reply);
+				returnCount++;
+				if (returnCount == numberOfUsers) {
+					//console.log(allData);
+					res.render('debug', {
+						"userlist" : allData
+					});
+				}
+			});
+		}
 	});
 });
 
