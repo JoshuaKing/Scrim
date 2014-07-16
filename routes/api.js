@@ -23,6 +23,7 @@ router.get('/checkusername/:un', function(req, res) {
 	});
 });
 
+
 /* Check if a team URL is available
 * Returns JSON:
 * { "inUse" : 

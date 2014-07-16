@@ -8,14 +8,14 @@ router.get('/', function(req, res) {
 	db.get("foo", function(err, value) {
 		if (err) throw(err);
 		console.log(value);
-		res.render('home', {
+		res.render('team', {
 			"title" : "Team page",
 			"foo" : value
 		});
 	});
 });
 
-/* Base unique teamp page */ 
+/* Base unique team page */ 
 router.get('/:id', function(req, res) {
 	var db = req.db;
 
@@ -23,7 +23,7 @@ router.get('/:id', function(req, res) {
 		if (err) throw(err);
 		console.log(value);
 		
-		res.render('home', {
+		res.render('team', {
 			"title" : "Team page",
 			"foo" : req.params.id
 		});

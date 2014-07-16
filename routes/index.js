@@ -7,7 +7,7 @@ var router = express.Router();
 // Session Auth check for redirection
 function checkAuth(req, res, next) {
 	if (!req.session.uid) {
-		res.redirect('/');
+		res.redirect('/login');
 	} else {
 		next();
 	}
@@ -82,11 +82,10 @@ router.get('/home', checkAuth, function(req, res) {
 	var uid = req.session.uid;
 
 	db.hget("user:"+uid, "username", function(err, value) {
-		if (err) throw(err);
-		console.log(value);
+
 		res.render('home', {
-			"title" : "User Home",
-			"foo" : uid
+			"title" : "Welcome, "+value,
+			"uid" : uid
 		});
 	});
 	
@@ -143,36 +142,27 @@ router.post('/signup', function(req, res) {
 
 
 /* GET - NEW TEAM */
-router.get('/newteam', function(req, res) {
+router.get('/newteam', checkAuth, function(req, res) {
 	var db = req.db;
 	db.get("foo", function(err, value) {
 		if (err) throw(err);
 		console.log(value);
-		res.render('home', {
+		res.render('newteam', {
 			"title" : "Create a new team",
 			"foo" : value
 		});
 	});
 });
 
+
 /* GET - LOGOUT */
 router.get('/logout', function(req, res) {
-	// DO LOGOUT
+	// Delete UID from session
+	delete req.session.uid;
 
+	// Redirect to home
 	res.redirect("/");
 });
-
-/* GET - ERROR */
-router.get('/error', function(req, res) {
-	// DO LOGOUT
-
-	res.render('home', {
-		message : "An error occured"
-	});
-});
-
-
-
 
 
 /* PAGE FOR DEBUGGING THE DATABASE */
