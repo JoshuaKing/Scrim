@@ -2,8 +2,10 @@ extends layout
 
 block content
 	h1 Welcome to Scrim
-	p Add a new user:
-	form#formAddUser(name="adduser", method="post", action="/signup")
+	p Enter your login details
+	form#formAddUser(name="adduser", method="post", action="/login")
 		input#inputUserName(type="text", placeholder="Username", name="username")
+		br
 		input#inputUserPass(type="text", placeholder="Password", name="userpass")
+		br
 		button#btnSubmit(type="submit") Submit

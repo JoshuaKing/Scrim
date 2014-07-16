@@ -1,9 +1,25 @@
 extends layout
 
 block content
-	h1.
-		User List
-	ul
-		each user, i in userlist
-			li
-				= user.username
+	h1 User List
+	#userList
+		table
+			thead
+				th UserName
+				th Password
+				th Date Created
+			tbody
+				each user, i in userlist
+					tr
+					td 
+						= user.username
+					td
+						= user.password
+					td
+						= user.date_created
+	h1 Team List
+	#userList
+		table
+			thead
+				th TeamName
+			tbody

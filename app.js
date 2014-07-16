@@ -3,6 +3,7 @@ var path = require('path');
 var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
+var session = require('express-session');
 var bodyParser = require('body-parser');
 var redis = require('redis');
 var db = redis.createClient(10441, "angelfish.redistogo.com");
@@ -11,6 +12,7 @@ db.auth("5c4121f133421b3593b2bf68af64be7b", function() {console.log("DB Connecte
 
 var routes = require('./routes/index');
 var team = require('./routes/team');
+var jsonapi = require('./routes/api');
 
 var app = express();
 
@@ -23,6 +25,15 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
+app.use(session({
+    secret : "joshcoenjosh",
+    cookie : {
+        path : '/',
+        httpOnly : true,
+        secure : false,
+        maxAge : 300000000000 // A long ass fucking time
+    }
+}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(function(req, res, next){
     req.db = db;
@@ -31,6 +42,7 @@ app.use(function(req, res, next){
 
 app.use('/', routes);
 app.use('/team', team);
+app.use('/api', jsonapi);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
