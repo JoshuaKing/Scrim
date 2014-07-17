@@ -13,6 +13,7 @@ db.auth("5c4121f133421b3593b2bf68af64be7b", function() {console.log("DB Connecte
 var routes = require('./routes/index');
 var team = require('./routes/team');
 var jsonapi = require('./routes/api');
+var home = require('./routes/home');
 
 var app = express();
 
@@ -43,6 +44,7 @@ app.use(function(req, res, next){
 app.use('/', routes);
 app.use('/team', team);
 app.use('/api', jsonapi);
+app.use('/home', home);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {

@@ -2,22 +2,8 @@ var express = require('express');
 var router = express.Router();
 
 /****************
-** MIDDLEWARE
-****************/
-// Session Auth check for redirection
-function checkAuth(req, res, next) {
-	if (!req.session.uid) {
-		res.redirect('/login');
-	} else {
-		next();
-	}
-}
-
-/****************
 ** ROUTES
 ****************/
-
-
 
 /* GET - LANDING */
 router.get('/', function(req, res) {
@@ -27,6 +13,10 @@ router.get('/', function(req, res) {
 
 /* GET - LOGIN */
 router.get('/login', function(req, res) {
+	console.log("Path = "+req.path);
+	if (req.session.ref) {
+		console.log("Req = "+req.session.ref);
+	}
 	res.render('login', {});
 });
 
@@ -56,7 +46,8 @@ router.post('/login', function(req, res) {
 						console.log("Password matches, logging in as "+userName);
 						req.session.uid = UID;
 
-						res.redirect('/home');
+						var ref = req.session.ref ? req.session.ref : '/home';
+						res.redirect(ref);
 					} else {
 						console("Password incorrect, refreshing login");
 						res.render('login', {
@@ -73,23 +64,6 @@ router.post('/login', function(req, res) {
 	});
 });
 
-
-/* GET - USER HOMEPAGE */
-router.get('/home', checkAuth, function(req, res) {
-	// Local DB
-	var db = req.db;
-
-	var uid = req.session.uid;
-
-	db.hget("user:"+uid, "username", function(err, value) {
-
-		res.render('home', {
-			"title" : "Welcome, "+value,
-			"uid" : uid
-		});
-	});
-	
-});
 
 /* GET - SIGNUP */
 router.get('/signup', function(req, res) {
@@ -137,20 +111,6 @@ router.post('/signup', function(req, res) {
 			res.redirect('/signup');
 		}
 		
-	});
-});
-
-
-/* GET - NEW TEAM */
-router.get('/newteam', checkAuth, function(req, res) {
-	var db = req.db;
-	db.get("foo", function(err, value) {
-		if (err) throw(err);
-		console.log(value);
-		res.render('newteam', {
-			"title" : "Create a new team",
-			"foo" : value
-		});
 	});
 });
 
