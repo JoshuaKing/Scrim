@@ -2,7 +2,7 @@ extends layout
 
 block content
 	h1 Welcome to Scrim
-	p You were redirected from "#{ref}"
+	p You were redirected from "#{session.ref}"
 	p Enter your login details
 	form#formAddUser(name="adduser", method="post", action="/login")
 		input#inputUserName(type="text", placeholder="Username", name="username")

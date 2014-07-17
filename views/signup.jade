@@ -5,5 +5,9 @@ block content
 	p Add a new user:
 	form#formAddUser(name="adduser", method="post", action="/signup")
 		input#inputUserName(type="text", placeholder="Username", name="username")
+		br
+		input#inputUserEmail(type="text", placeholder="Email Address", name="useremail")
+		br
 		input#inputUserPass(type="text", placeholder="Password", name="userpass")
+		br
 		button#btnSubmit(type="submit") Submit

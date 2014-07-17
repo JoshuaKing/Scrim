@@ -1,5 +1,17 @@
 extends layout
 
 block content
-	h1= title
-	p Foo returned #{foo}
+	h1 Create a new team!
+	p You are logged in as #{session.username}:
+	form#formAddUser(name="createteam", method="post", action="/createteam")
+		input#inputUserName(type="text", placeholder="Team Name", name="teamname")
+		br
+		| Game: 
+		select(name="teamgame")
+			option(selected="true", value="dota2") Dota 2
+		br
+		input#inputUserEmail(type="text", placeholder="Email Address", name="useremail")
+		br
+		input#inputUserPass(type="text", placeholder="Password", name="userpass")
+		br
+		button#btnSubmit(type="submit") Submit

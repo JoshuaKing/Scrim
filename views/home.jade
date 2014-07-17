@@ -1,7 +1,6 @@
 extends layout
 
 block content
-	h1= title
-	p Your user ID number is #{uid}
+	h1 Welcome, #{session.username}
 	a(href="/logout") Logout
 

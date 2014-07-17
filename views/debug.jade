@@ -6,6 +6,7 @@ block content
 		table
 			thead
 				th UserName
+				th Email Address
 				th Password
 				th Date Created
 			tbody
@@ -13,6 +14,8 @@ block content
 					tr
 					td 
 						= user.username
+					td
+						= user.email
 					td
 						= user.password
 					td
@@ -23,3 +26,13 @@ block content
 			thead
 				th TeamName
 			tbody
+	h1 Dota 2 Regions
+	ul
+		each region, i in dota2regions
+			li
+				= region
+	//
+		h1 Add a region
+		form(name="addregion", method="post", action="/debug/addregion")
+			input(name="regionname", placeholder="Region", type="text")
+			button(type="submit") Submit

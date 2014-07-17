@@ -14,6 +14,7 @@ var routes = require('./routes/index');
 var team = require('./routes/team');
 var jsonapi = require('./routes/api');
 var home = require('./routes/home');
+var debug = require('./routes/debug');
 
 var app = express();
 
@@ -28,6 +29,8 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(session({
     secret : "joshcoenjosh",
+    resave : true,
+    saveUninitialized : true,
     cookie : {
         path : '/',
         httpOnly : true,
@@ -45,6 +48,7 @@ app.use('/', routes);
 app.use('/team', team);
 app.use('/api', jsonapi);
 app.use('/home', home);
+app.use('/debug', debug);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {

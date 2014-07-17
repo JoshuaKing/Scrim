@@ -13,11 +13,9 @@ router.get('/', function(req, res) {
 
 /* GET - LOGIN */
 router.get('/login', function(req, res) {
-	console.log("Path = "+req.path);
-	if (req.session.ref) {
-		console.log("Req = "+req.session.ref);
-	}
-	res.render('login', {});
+	res.render('login', {
+		session : req.session
+	});
 });
 
 /* POST - LOGIN */
@@ -45,6 +43,7 @@ router.post('/login', function(req, res) {
 						// Successful login
 						console.log("Password matches, logging in as "+userName);
 						req.session.uid = UID;
+						req.session.username = userName;
 
 						var ref = req.session.ref ? req.session.ref : '/home';
 						res.redirect(ref);
@@ -122,35 +121,6 @@ router.get('/logout', function(req, res) {
 
 	// Redirect to home
 	res.redirect("/");
-});
-
-
-/* PAGE FOR DEBUGGING THE DATABASE */
-router.get('/debug', function(req, res) {
-	// Local DB
-	var db = req.db;
-
-	// JS Variables
-	res.locals.userlist = [];
-
-	db.hgetall("users", function(err, reply) {
-		if (err) throw(err);
-
-		var numberOfUsers = Object.keys(reply).length;
-		//console.log("Logging all user data : " + numberOfUsers);
-
-		var i, returnCount = 0;
-		for(i = 1; i <= numberOfUsers; i++) {
-			db.hgetall("user:"+i, function(err, reply) {
-				//console.log(reply)
-				res.locals.userlist.push(reply);
-				returnCount++;
-				if (returnCount == numberOfUsers) {
-					res.render('debug', {});				
-				}
-			});
-		}
-	});
 });
 
 

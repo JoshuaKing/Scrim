@@ -43,4 +43,17 @@ router.get('/checkteamurl/:turl', function(req, res) {
 });
 
 
+/* Get regions available for a game
+* Returns an array of regions[]:
+*/
+router.get('/getregions/:gn', function(req, res) {
+	// Local DB
+	var db = req.db;
+
+	db.smembers("game:"+req.params.gn+":regions", function(err, reply) {
+		res.send(reply);
+		//console.log(JSON.stringify(reply));
+	});
+});
+
 module.exports = router;

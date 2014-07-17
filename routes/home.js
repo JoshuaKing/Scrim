@@ -25,30 +25,23 @@ router.get('/', checkAuth, function(req, res) {
 	// Local DB
 	var db = req.db;
 
-	var uid = req.session.uid;
-
-	db.hget("user:"+uid, "username", function(err, value) {
-
-		res.render('home', {
-			"title" : "Welcome, "+value,
-			"uid" : uid
-		});
+	res.render('home', {
+		session : req.session
 	});
 });
 
 
 /* GET - NEW TEAM */
 router.get('/createteam', checkAuth, function(req, res) {
+	// Local DB
 	var db = req.db;
-	db.get("foo", function(err, value) {
-		if (err) throw(err);
-		console.log(value);
-		res.render('createteam', {
-			"title" : "Create a new team",
-			"foo" : value
-		});
+
+	
+	res.render('createteam', {
+		session : req.session
 	});
 });
+
 
 /* GET - USER SETTINGS */
 router.get('/settings', checkAuth, function(req, res) {
