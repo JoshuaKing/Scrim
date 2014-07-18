@@ -2,7 +2,21 @@ extends layout
 
 block content
 	h1= team.info.name
-	| Your team ID is #{team.id}<br>
-	| Your game is #{team.info.game}<br>
+	- if (session.username) 
+		b You are logged in as #{session.username}<br>
+		- if (session.uid == team.info.creator)
+			b You ARE the team creator<br>
+		- else
+			b You are NOT the team creator<br>
+			- var notMem = true
+			each player, i in team.players
+				- if (player == session.uid)
+					b You ARE a member of this team<br>
+					- notMem = false
+			- if (notMem)
+				b You are NOT a member of this team<br>
+
+	| <br>Team ID is #{team.id}<br>
+	| Game ID is #{team.info.game}<br>
 	| Creator ID is #{team.info.creator}<br>
 	| Team currently has #{Object.keys(team.players).length} players.
