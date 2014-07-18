@@ -1,5 +1,8 @@
 extends layout
 
 block content
-	h1= title
-	p Foo returned #{foo}
+	h1= team.info.name
+	| Your team ID is #{team.id}<br>
+	| Your game is #{team.info.game}<br>
+	| Creator ID is #{team.info.creator}<br>
+	| Team currently has #{Object.keys(team.players).length} players.
