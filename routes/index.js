@@ -48,7 +48,7 @@ router.post('/login', function(req, res) {
 						var ref = req.session.ref ? req.session.ref : '/home';
 						res.redirect(ref);
 					} else {
-						console("Password incorrect, refreshing login");
+						console.log("Password incorrect, refreshing login");
 						res.render('login', {
 							"failMessage" : "Password is incorrect"
 						});

@@ -9,13 +9,13 @@ router.get('/', function(req, res) {
 	var db = req.db;
 
 	// DB checks
-	var uldone, regionsdone;
+	var uldone, regionsdone, teamsdone;
 
 	// JS Variables
 	res.locals.userlist = [];
+	res.locals.teamlist = [];
 
 	db.hgetall("users", function(err, reply) {
-		if (err) throw(err);
 
 		var numberOfUsers = Object.keys(reply).length;
 		//console.log("Logging all user data : " + numberOfUsers);
@@ -28,8 +28,10 @@ router.get('/', function(req, res) {
 				returnCount++;
 				if (returnCount == numberOfUsers) {
 					uldone = true;
-					if (uldone && regionsdone) {
-						res.render('debug', {});
+					if (uldone && regionsdone && teamsdone) {
+						res.render('debug', {
+							session : req.session
+						});
 					}			
 				}
 			});
@@ -39,10 +41,35 @@ router.get('/', function(req, res) {
 	db.smembers("game:dota2:regions", function(err, reply) {
 		res.locals.dota2regions = reply;
 		regionsdone = true;
-		if (uldone & regionsdone) {
-			res.render('debug');
+		if (uldone && regionsdone && teamsdone) {
+			res.render('debug', {
+				session : req.session
+			});
 		}
-	})
+	});
+
+	db.hgetall("teamurls", function(err, reply) {
+		var numberOfTeams = Object.keys(reply).length;
+
+		var i, returnCount = 0;
+		for (i = 1; i <= numberOfTeams; i++) {
+			db.hgetall("team:"+i, function(err, reply) {
+				res.locals.teamlist.push(reply);
+				returnCount++;
+				if (returnCount == numberOfTeams) {
+					teamsdone = true;
+					if (uldone && regionsdone && teamsdone) {
+						res.render('debug', {
+							session : req.session
+						});
+					}
+				}
+			});
+		}
+	});
+
+
+
 });
 
 

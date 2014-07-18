@@ -24,8 +24,25 @@ block content
 	#userList
 		table
 			thead
-				th TeamName
+				th Team Name
+				th URL
+				th Creator ID
+				th Date Created
+				th Game ID
+				th UTC Offset (millis)
+				th Game Region
+				th Description
 			tbody
+				each team, i in teamlist
+					tr
+					td= team.name
+					td= team.url
+					td= team.creator
+					td= team.date_created
+					td= team.game
+					td= team.utc_offset
+					td= team.region
+					td= team.desc
 	h1 Dota 2 Regions
 	ul
 		each region, i in dota2regions
