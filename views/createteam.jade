@@ -10,8 +10,9 @@ block content
 		select(name="teamgame")
 			option(selected="true", value="dota2") Dota 2
 		br
-		input#inputUserEmail(type="text", placeholder="Email Address", name="useremail")
-		br
-		input#inputUserPass(type="text", placeholder="Password", name="userpass")
+		| Region: 
+		select(name="gameregion")
+			each region, i in session.games.dota2.regions
+				option(value=region)= region
 		br
 		button#btnSubmit(type="submit") Submit

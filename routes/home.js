@@ -36,6 +36,27 @@ router.get('/createteam', checkAuth, function(req, res) {
 	// Local DB
 	var db = req.db;
 
+	db.smembers("game:dota2:regions", function(err, reply) {
+		req.session.games = {
+			"dota2" : {
+				"regions" : reply
+			}
+		};
+
+		console.log(req.session.game);
+
+		res.render('createteam', {
+			session : req.session,
+		});
+	});
+});
+
+/* GET - NEW TEAM */
+router.post('/createteam', checkAuth, function(req, res) {
+	// Local DB
+	var db = req.db;
+
+
 	
 	res.render('createteam', {
 		session : req.session
