@@ -1,6 +1,12 @@
 extends layout
 
 block content
-	h1 Welcome, #{session.username}
+	h1 Welcome, #{session.username}<br>
+	p You are a member of #{Object.keys(teams).length} teams:
+	ul
+		each team, i in teams
+			li
+				a(href="/team/#{team.url}")= team.name
+	a(href="/home/createteam") Create a new team<br>
 	a(href="/logout") Logout
 

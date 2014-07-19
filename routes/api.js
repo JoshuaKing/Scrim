@@ -1,9 +1,24 @@
 var express = require('express');
 var router = express.Router();
 
-/*
+/****************
+** MIDDLEWARE
+****************/
+
+// Session Auth check for redirection
+function checkAuth(req, res, next) {
+	if (!req.session.uid) {
+		req.session.ref = req.originalUrl;
+		res.redirect('/login');
+	} else {
+		next();
+	}
+}
+
+
+/*******************
 * JSON API FUNCTIONS
-*/
+*******************/
 
 /* Check if a username is available
 * Returns JSON:

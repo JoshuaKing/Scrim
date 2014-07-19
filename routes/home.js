@@ -25,8 +25,33 @@ router.get('/', checkAuth, function(req, res) {
 	// Local DB
 	var db = req.db;
 
-	res.render('home', {
-		session : req.session
+	// Load team data
+	db.smembers("user:"+req.session.uid+":teams", function(err, reply) {
+		var numTeams = Object.keys(reply).length;
+
+		res.locals.teams = [];
+
+		if (numTeams > 0) {
+			var i, returncount = 0;
+			for (i = 0; i < numTeams; i++) {
+				// Get team info
+				db.hgetall("team:"+reply[i], function(err, reply) {
+					res.locals.teams.push(reply);
+					returncount++;
+
+					if (returncount == numTeams) {
+						// All done, render
+						res.render('home', {
+							session : req.session
+						});
+					}
+				});
+			}
+		} else {
+			res.render('home', {
+				session : req.session
+			});
+		}
 	});
 });
 
@@ -83,6 +108,9 @@ router.post('/createteam', checkAuth, function(req, res) {
 				"utc_offset" : localOffset,
 				"date_created" : currentTime
 			});
+
+			// Update user teams
+			db.sadd("user:"+req.session.uid+":teams", reply);
 
 			res.redirect('/team/'+reply);
 		});

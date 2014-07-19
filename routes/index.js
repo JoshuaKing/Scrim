@@ -42,11 +42,14 @@ router.post('/login', function(req, res) {
 					if (userPass == reply) {
 						// Successful login
 						console.log("Password matches, logging in as "+userName);
+
+						// Set up session
 						req.session.uid = UID;
 						req.session.username = userName;
 
 						var ref = req.session.ref ? req.session.ref : '/home';
 						res.redirect(ref);
+
 					} else {
 						console.log("Password incorrect, refreshing login");
 						res.render('login', {
