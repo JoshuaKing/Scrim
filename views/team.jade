@@ -2,21 +2,51 @@ extends layout
 
 block content
 	h1= team.info.name
-	- if (session.username) 
+	if (session.username) 
 		b You are logged in as #{session.username}<br>
-		- if (session.uid == team.info.creator)
+		if (session.uid == team.info.creator)
 			b You ARE the team creator<br>
-		- else
+			if (team.requests)
+				| There are #{Object.keys(team.requests).length} pending player requests
+				ul
+				each req, i in team.requests
+					li
+						| UID = #{req} 
+						a(href="/team/#{team.id}/approve/#{req}") Click here to approve
+		else
 			b You are NOT the team creator<br>
 			- var notMem = true
 			each player, i in team.players
-				- if (player == session.uid)
+				if (player == session.uid)
 					b You ARE a member of this team<br>
 					- notMem = false
-			- if (notMem)
+			if (notMem)
 				b You are NOT a member of this team<br>
+				- var reqPending = false
+				each req, i in team.requests
+					if (session.uid == req)
+						- reqPending = true
+				if (reqPending)
+					| Your request to join is pending<br>
+				else
+					a(href="/team/#{team.id}/join") Click here to apply to join this team
+					br
+		br
+		each fan, i in team.fans
+			- var isFan = false
+			if (session.uid == fan) 
+				- isFan = true
+		if (isFan)
+			b You ARE a fan of this team!<br>
+		else
+			b You are NOT a fan of this team<br>
+			a(href="/team/#{team.id}/fan") Click here to become a fan
+			br
+
+
 
 	| <br>Team ID is #{team.id}<br>
 	| Game ID is #{team.info.game}<br>
 	| Creator ID is #{team.info.creator}<br>
-	| Team currently has #{Object.keys(team.players).length} players.
+	| Team currently has #{Object.keys(team.players).length} players.<br>
+	| Team currently has #{Object.keys(team.fans).length} fans.<br>
