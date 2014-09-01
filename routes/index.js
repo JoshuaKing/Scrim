@@ -7,7 +7,7 @@ var router = express.Router();
 
 /* GET - LANDING */
 router.get('/', function(req, res) {
-  res.render('index', { title: 'ScrimFindr' });
+  res.render('index', { title: 'ScrimFindr', signedIn: (session.username ? true : false) });
 });
 
 
