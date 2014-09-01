@@ -1,5 +1,10 @@
 extends layout
 
-block content
-  h1= title
-  p Welcome to #{title}
+head
+  link(style='text/stylesheet', href='public/stylesheets/style.css')
+
+body
+  header
+    h1= title
+  section.body
+    p Welcome to #{title}
