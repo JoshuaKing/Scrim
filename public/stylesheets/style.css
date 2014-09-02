@@ -113,3 +113,10 @@ form .button {
 	color: white;
 	width: 260px;
 }
+
+.error {
+	border-left: 2px solid #BC3E3F;
+	color: #BC3E3F;
+	padding-left: 7px;
+	font-style: italic;
+}

@@ -8,17 +8,23 @@ body
   block content
     section#content
       section.left
-        header Test welcome to #{title}
+        header Welcome to Scrim Findr
         p Description about Scrim Findr. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
       section.right
         header Login
-        form(method='post', action='/login/')
-          input.field(placeholder='Username')
-          input.field(placeholder='Password', type='password')
+        if failLogin
+          div.error #{failLogin}
+        form(method='post', action='/')
+          input.field(placeholder='Username', name="username")
+          input.field(placeholder='Password', name="userpass", type='password')
+          input.field(value='login', name="action", type='hidden')
           input.button(value='Login', type='submit')
         header Signup
-        form(method='post', action='/signup/')
-          input.field(placeholder='Username')
-          input.field(placeholder='Password', type='password')
-          input.field(placeholder='Steam ID (?)')
+        if failSignup
+          div.error #{failSignup}
+        form(method='post', action='/')
+          input.field(placeholder='Username', name="username")
+          input.field(placeholder='Password', name="userpass", type='password')
+          input.field(placeholder='Steam ID (?)', name="steamid", type='number')
+          input.field(value='signup', name="action", type='hidden')
           input.button(value='Sign Up', type='submit')
