@@ -2,16 +2,20 @@ doctype html
 html
   head
     title= title
+    link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300', type='text/css')
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Ubuntu', type='text/css')
+    block stylesheets
   body
     header
-      h1 Scrim Findr
-    nav
-      if session.username
-        a (href='/home/') Home
-        a (href='/teams/') Teams
-        a (href='/logout/') Logout
-      else
-        a (href='/signup/') Sign Up
-        a (href='/login/') Login
+      h1
+        a(href='/') SCRIM FINDR
+      nav
+        if session && session.uid
+          a(href='/home/') Home
+          a(href='/teams/') Teams
+          a(href='/logout/') Logout
+        else
+          a(href='/signup/') Sign Up
+          a(href='/login/') Login
     block content

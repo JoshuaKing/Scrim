@@ -1,30 +1,115 @@
+@font-face {
+	font-family: 'LeagueGothic';
+	src: url(/fonts/leaguegothic-regular-webfont.ttf);
+}
+
+@font-face {
+	font-family: 'LeagueGothicCondensed';
+	src: url(/fonts/leaguegothic-condensed-webfont.ttf);
+}
+
+
+@font-face {
+	font-family: 'LeagueGothicRegular';
+	src: url(/fonts/LeagueGothic-Regular.otf);
+}
+
 body {
 	background: #eee;
-  font: Helvetica, Arial, sans-serif;
-  
+  font-family: 'LeagueGothicCondensed', Helvetica, Arial, sans-serif;
+	font-smooth: always;
+  font-weight: 300;
+  padding: 0;
+  margin: 0;
+  color: #222;
+  text-align: center;
 }
 
 body>header {
-	background: #555;
-	color: #D13E19;
-	height: 70px;
-	line-height: 70px;
-	padding-left: 100px;
+	vertical-align: middle;
 }
 
-body>nav {
-	background: #555;
-	color: #D13E19;
+body>header h1 {
+	margin: 0;
+	color: #BC3E3F;
+  font-weight: 300;
+  font-size: 72px;
+	vertical-align: middle;
+	text-align: center;
+	height: 170px;
+	line-height: 170px;
+	background: #162127;
+	background: radial-gradient(ellipse at center, #1F2932 0%,#162127 70%);
+	background: -webkit-radial-gradient(center, ellipse cover, #1F2932 0%,#162127 70%);
+	
+  font-family: 'LeagueGothicRegular', Helvetica, Arial, sans-serif;
+}
+
+body>header>nav {
+	color: #162127;
 	line-height: 30px;
 	text-align: center;
 }
 
-body>nav a {
+nav a {
 	display: inline-block;
-	width: 100px;
+	width: 150px;
 	text-align: center;
+	margin-right: 10px;
+	border-bottom: 2px solid transparent;
 }
 
-body>nav a:hover {
-	background: #666;
+nav a:hover {
+	color: #BC3E3F;
+	border-bottom: 2px solid #BC3E3F;
+}
+
+body a {
+	color: inherit;
+	text-decoration: none;
+}
+
+section#content {
+	width: 1000px;
+	display: inline-block;
+	vertical-align: top;
+	margin-top: 50px;
+	text-align: justify;
+}
+
+section>header {
+	font-size: 1.5em;
+	text-align: left;
+}
+
+form {
+	margin-bottom: 20px;
+}
+
+form input {
+	display: block;
+	border-radius: 3px;
+	border: 1px solid #ccc;
+	margin-top: 7px;
+	width: 250px;
+	height: 26px;
+	font-size: 18px;
+	line-height: 26px;
+	padding: 0;
+}
+
+form .field {
+	padding-left: 10px;
+}
+
+form .button {
+	padding: 0;
+	height: 28px;
+	background: #329632;
+	color: #fff;
+	background: #9E8568;
+	color: #162127;
+	background: #BC3E3F;
+	color: white;
+	width: 260px;
 }
